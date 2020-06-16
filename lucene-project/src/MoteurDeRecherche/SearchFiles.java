@@ -21,21 +21,21 @@ public class SearchFiles {
 	
 	 /*#####################################################################################################*/
 	 /* searchFiles :                                                                                       */
-	 /* Cette méthode analyse une requête d'entrée de l'utilisateur                                         */
+	 /* Cette mÃ©thode analyse une requÃªte d'entrÃ©e de l'utilisateur                                         */
 	 /*                                                                                                     */
 	 /* @inputs:                                                                                            */
-	 /* 		String req: la requete à analysé, e.g., "a+b"                                               */
-	 /* 		String choice: le critère lequel sera effectué la recherche, e.g., "author"                 */
+	 /* 		String req: la requete Ã  analysÃ©, e.g., "a+b"                                           */
+	 /* 		String choice: le critÃ¨re lequel sera effectuÃ© la recherche, e.g., "author"             */
 	 /*                                                                                                     */
 	 /*#####################################################################################################*/
 	  
 	@SuppressWarnings("unchecked")
 	public void searchFiles(String req, String choice) throws ParseException, IOException {
 		
-		// cet argument indique combien de meilleurs résultats de recherche il doit retourner.
+	// cet argument indique combien de meilleurs rÃ©sultats de recherche il doit retourner.
         int hitsPerPage = 3204;  
         
-        // ouvrir l'index lucene en mode lecture et gère la recherche
+        // ouvrir l'index lucene en mode lecture et gÃ¨re la recherche
         IndexReader reader = DirectoryReader.open(IndexFiles.dir);  
         
         // permet de l'execution d'une recherche dans l'index et la recherche des documents pertinents
@@ -48,7 +48,7 @@ public class SearchFiles {
         // initialiser notre boolean query
         BooleanQuery booleanQuery = null;
         
-        // Appeler la méthode parseQuery 
+        // Appeler la mÃ©thode parseQuery 
         booleanQuery = parseQuery(req, choice);
         
         /*#####################################################################################################*/
@@ -57,23 +57,23 @@ public class SearchFiles {
         /*                                                                                                     */
         /*#####################################################################################################*/
         
-        //Permet de selectionner des documents pertinents (avec le score associé) pour une requête
+        //Permet de selectionner des documents pertinents (avec le score associÃ©) pour une requÃªte
         docs = searcher.search(booleanQuery, hitsPerPage); 
 
         hits = docs.scoreDocs;
 
         h = hits.length;
         
-        // vider la liste des résultats pour une nouvelle recherche
+        // vider la liste des rÃ©sultats pour une nouvelle recherche
         GraphicalUserInterface.dlm.clear();
         
-        // afficher le nombre des résultats trouvés dans l'interface graphique
+        // afficher le nombre des rÃ©sultats trouvÃ©s dans l'interface graphique
         if (hits.length == 0) {
-             GraphicalUserInterface.dlm.addElement("Aucun article n'a été trouvé \n");
+             GraphicalUserInterface.dlm.addElement("Aucun article n'a Ã©tÃ© trouvÃ© \n");
              }else if(hits.length == 1) { 
-                	GraphicalUserInterface.dlm.addElement(+h+" Article a été trouvé \n");
+                	GraphicalUserInterface.dlm.addElement(+h+" Article a Ã©tÃ© trouvÃ© \n");
                     }else {
-        	            GraphicalUserInterface.dlm.addElement(+h+" Articles ont été trouvés \n");
+        	            GraphicalUserInterface.dlm.addElement(+h+" Articles ont Ã©tÃ© trouvÃ©s \n");
                         }
         
         for(int j = 0; j < hits.length; ++j) {
@@ -83,7 +83,7 @@ public class SearchFiles {
 			String id = document.get("id") ;
 			String title = document.get("title") ;
 
-            //afficher la liste des résultats (les articles trouvés) dans l'interface graphique 
+            //afficher la liste des rÃ©sultats (les articles trouvÃ©s) dans l'interface graphique 
 			GraphicalUserInterface.dlm.addElement(j+1+" /  ID : "+ id+" -- Titre : " +title);
         }
 		reader.close();
@@ -92,14 +92,14 @@ public class SearchFiles {
 	
 	/*#####################################################################################################*/
 	/*  parseQuery :                                                                                       */
-	/*  Cette méthode analyse une requête d'entrée et la divise en sous-requêtes.                          */
-	/*  Ensuite, elle crée une requête booléenne                                                           */
+	/*  Cette mÃ©thode analyse une requÃªte d'entrÃ©e et la divise en sous-requÃªtes.                          */
+	/*  Ensuite, elle crÃ©e une requÃªte boolÃ©enne                                                           */
 	/*                                                                                                     */
 	/*  @inputs:                                                                                           */
-	/*  		String inputQuery: la requête à analysé, e.g., "a+b"                                       */
-	/*  		String searchCriteria: le critère lequel sera effectué la recherche, e.g., "author"        */
+	/*  		String inputQuery: la requÃªte Ã  analysÃ©, e.g., "a+b"                                   */
+	/*  		String searchCriteria: le critÃ¨re lequel sera effectuÃ© la recherche, e.g., "author"    */
 	/*  @output:                                                                                           */
-    /*		BooleanQuery booleanQuery: un BooleanQuery qui sera utilisé pour lancer la recherche           */
+        /*	        BooleanQuery booleanQuery: un BooleanQuery qui sera utilisÃ© pour lancer la recherche   */
 	/*                                                                                                     */
 	/*#####################################################################################################*/
 	
@@ -109,28 +109,28 @@ public class SearchFiles {
 		//Initialisation 
 		BooleanQuery booleanQuery = null;
 		char currentOperator;
-        String currentQuery = "";
-        int i;
+                String currentQuery = "";
+                int i;
         
-		//vérification et affectation (le premier élément de la requete doit être précédé par un opérateur "+" ou "-")
+		//vÃ©rification et affectation (le premier Ã©lÃ©ment de la requete doit Ãªtre prÃ©cÃ©dÃ© par un opÃ©rateur "+" ou "-")
 		if (inputQuery.startsWith("-") == false) {
 			inputQuery = "+" + inputQuery;
 		}
 		
 		i = 0;
 		
-		//initialiser le premier opérateur
-		//la méthode "charAt()" récupère le caractère de l'indice associé
+		//initialiser le premier opÃ©rateur
+		//la mÃ©thode "charAt()" rÃ©cupÃ¨re le caractÃ¨re de l'indice associÃ©
 		currentOperator = inputQuery.charAt(i); 
 		++i;
 		
-		//la boucle avance à chaque itération par 1 caractère 
+		//la boucle avance Ã  chaque itÃ©ration par 1 caractÃ¨re 
 		while (i < inputQuery.length()) {
 			if (inputQuery.charAt(i) == '+' || inputQuery.charAt(i) == '|' || inputQuery.charAt(i) == '-') { 
-			    // une nouvelle clause est rencontrée
+			    // une nouvelle clause est rencontrÃ©e
 				
-				// création de la requete query et l'ajouté à BooleanQuery
-				// créationn de l'objet query
+				// crÃ©ation de la requete query et l'ajoutÃ© Ã  BooleanQuery
+				// crÃ©ationn de l'objet query
 				Query query;
 				
 				try {
@@ -140,7 +140,7 @@ public class SearchFiles {
 						booleanQueryBuilder.add(query, BooleanClause.Occur.MUST);
 						
 					} else if (currentOperator == '-') {
-						//signifie que la clause intèrdite
+						//signifie que la clause intÃ¨rdite
 						booleanQueryBuilder.add(query, BooleanClause.Occur.MUST_NOT);
 						
 					} else if (currentOperator == '|') {
@@ -152,23 +152,23 @@ public class SearchFiles {
 					e.printStackTrace();
 				}
 
-				// vider la la requête courante (currentQuery)
+				// vider la la requÃªte courante (currentQuery)
 				currentQuery = "";
 				
-				//mettre à jour l'opérateur courant (currentOperator) pour la prochaine requête
+				//mettre Ã  jour l'opÃ©rateur courant (currentOperator) pour la prochaine requÃªte
 				currentOperator = inputQuery.charAt(i);
 				
 			} else {
 				
-				//initialiser currentQuery par le caractère suivant
+				//initialiser currentQuery par le caractÃ¨re suivant
 				currentQuery = currentQuery + inputQuery.charAt(i); 
 			}
 			++i;
 		}
 		
-		// récupérer la dernière requête (le dernier caractère de l'élément)
-		// création de la requête "query" et l'ajouté à BooleanQuery
-		// créationn de l'objet query
+		// rÃ©cupÃ©rer la derniÃ¨re requÃªte (le dernier caractÃ¨re de l'Ã©lÃ©ment)
+		// crÃ©ation de la requÃªte "query" et l'ajoutÃ© Ã  BooleanQuery
+		// crÃ©ationn de l'objet query
 		Query query;
 		try {
 			query = new QueryParser(searchCriteria, new StandardAnalyzer()).parse(currentQuery);
