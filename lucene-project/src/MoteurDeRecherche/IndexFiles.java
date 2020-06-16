@@ -26,17 +26,17 @@ public class IndexFiles {
 	 /*#####################################################################################################*/
 	 /*                                                                                                     */
 	 /* Indexer :                                                                                           */
-	 /* cette méthode indexe les documents de la collection CACM d"une manière automatique                  */
+	 /* cette mÃ©thode indexe les documents de la collection CACM d"une maniÃ¨re automatique                  */
 	 /*                                                                                                     */
 	 /* @inputs:                                                                                            */
-	 /* 		StandardAnalyzer analyzer: le document qui etre indéxé                                      */
+	 /* 		StandardAnalyzer analyzer: le document qui etre indÃ©xÃ©                                  */
 	 /*                                                                                                     */
 	 /*#####################################################################################################*/
 	  
 
 	static Directory dir;
 	
-    // Constructeur
+        // Constructeur
 	public IndexFiles() {}
 
 	public static void Indexer(StandardAnalyzer analyzer) throws IOException{
@@ -47,10 +47,10 @@ public class IndexFiles {
 		// Chemin de l'index CACM
 		String indexDirectoryPath = "F:\\Informa\\L3-ISIL\\RI\\outils\\projet_Ri\\IndexCACM"; 
 			
-		// Ce répertoire contiendra les indexes
+		// Ce rÃ©pertoire contiendra les indexes
 		dir = FSDirectory.open(Paths.get(indexDirectoryPath));
         
-		// Créer une liste de fichiers en lui associant le chemin de CACM
+		// CrÃ©er une liste de fichiers en lui associant le chemin de CACM
 		File[] files = new File(path).listFiles(); 
 		
 		analyzer = new StandardAnalyzer();
@@ -58,28 +58,28 @@ public class IndexFiles {
 		// Analyser le text
 		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 		
-		// Définir le mode « CREATE » afin de supprimer tous les fichiers indexés existants dans le répertoire « index »
+		// DÃ©finir le mode Â« CREATE Â» afin de supprimer tous les fichiers indexÃ©s existants dans le rÃ©pertoire Â« index Â»
 		config.setOpenMode(OpenMode.CREATE);
 
 		IndexWriter iwriter = new IndexWriter(dir, config);
          
-		// Créer l'objet xmlFileFilter de la classe XmlFileFilter
+		// CrÃ©er l'objet xmlFileFilter de la classe XmlFileFilter
 		XmlFileFilter xmlFileFilter = new XmlFileFilter();
 		
-		// Créer l'objet xmlFileParser de la classe xmlFileParser
+		// CrÃ©er l'objet xmlFileParser de la classe xmlFileParser
 		XmlFileParser xmlFileParser = new XmlFileParser();
         
 		
 		for (File file : files) {
 			File fXmlFile = new File(path+"\\"+file.getName());
 			try {
-				// Vérifier si le fichier est de type XML en Applant la méthode « accept() » de la classe « XmlFileFilter »  
+				// VÃ©rifier si le fichier est de type XML en Applant la mÃ©thode Â« accept() Â» de la classe Â« XmlFileFilter Â»  
 				if(xmlFileFilter.accept(fXmlFile) == true) {
 					
-					// Créer un document 
+					// CrÃ©er un document 
 					ArrayList<Document> documents = new ArrayList<Document>();
                     
-					// Appeler la méthode « parser(String filename ) » de la classe « XmlFileParser »
+					// Appeler la mÃ©thode Â« parser(String filename ) Â» de la classe Â« XmlFileParser Â»
 					documents = xmlFileParser.parser(file.getAbsolutePath());
 				
 					for (Document doc : documents) {
