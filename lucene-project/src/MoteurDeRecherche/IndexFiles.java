@@ -26,10 +26,10 @@ public class IndexFiles {
 	 /*#####################################################################################################*/
 	 /*                                                                                                     */
 	 /* Indexer :                                                                                           */
-	 /* cette méthode indexe les documents de la collection CACM d"une manière automatique                  */
+	 /* cette méthode indexe les documents de la collection CACM d'une manière automatique                  */
 	 /*                                                                                                     */
 	 /* @inputs:                                                                                            */
-	 /* 		StandardAnalyzer analyzer: le document qui etre indéxé                                  */
+	 /* 	    StandardAnalyzer analyzer: le document qui doit être indéxé                                 */
 	 /*                                                                                                     */
 	 /*#####################################################################################################*/
 	  
